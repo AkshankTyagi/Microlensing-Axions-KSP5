@@ -7,7 +7,7 @@ R_E = 0.8  # Einstein radius
 impact_parameters = [ 0.8, 0.5, 0.25, 0.1]  # Multiple distances of closest approach
 impact_params = np.array(impact_parameters)*R_E
 
-# Time array
+# Time array or X array
 num_frames = 200
 x_start = -2*R_E
 x_end = 2*R_E
@@ -15,7 +15,7 @@ time_per_param = np.linspace(x_start, x_end, num_frames)
 time = np.concatenate([time_per_param + i * 4 for i in range(len(impact_params))])
 
 # Lens position (fixed at origin)
-lens_pos = np.array([0,0])
+lens_pos = np.array([-0.9,0.9])
 x_lens, y_lens = lens_pos
 
 # Source position as a function of time
@@ -52,12 +52,12 @@ def compute_magnification(t, impact_param):
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6.5))
 
 # Plot settings for the microlensing event
-ax1.set_xlim(x_start+x_lens, x_end-x_lens)
-ax1.set_ylim(x_start-y_lens, x_end+y_lens)
+ax1.set_xlim(x_start-abs(x_lens), x_end+abs(x_lens))
+ax1.set_ylim(x_start-abs(y_lens), x_end+abs(y_lens))
 lens_dot, = ax1.plot([], [], 'bo', label='Lens', markersize=10)
 source_dot, = ax1.plot([], [], 'ro', label='Source', markersize=5)
 image_dots, = ax1.plot([], [], 'go', label='Images', markersize=5)
-magnification_text = ax1.text(0.9*x_start+x_lens, 0.9*x_start-y_lens, '', fontsize=12)
+magnification_text = ax1.text(0.9*x_start-abs(x_lens), 0.9*x_start-abs(y_lens), '', fontsize=12)
 circle = plt.Circle(lens_pos, R_E, color='b', fill=False, linestyle='--', label='Einstein Radius')
 ax1.add_patch(circle)
 ax1.legend()
@@ -126,6 +126,6 @@ plt.tight_layout()
 plt.show()
 
 # Save the animation
-print("saving")
-ani.save(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\microlensing_animation_final.gif', writer='pillow', fps=40)
-print("output saved")
+# print("saving")
+# ani.save(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\microlensing_animation_trial.gif', writer='pillow', fps=40)
+# print("output saved")

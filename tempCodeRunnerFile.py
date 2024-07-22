@@ -1,1 +1,2 @@
-    magnification_line.set_data(time[:frame + 1], magnifications[:frame + 1])
+
+    plt.plot(time_per_param, magnifications, label=f'Impact parameter = {impact_param}')

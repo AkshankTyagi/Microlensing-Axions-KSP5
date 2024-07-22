@@ -4,7 +4,8 @@ from matplotlib.animation import FuncAnimation
 
 # Parameters
 R_E = 0.8  # Einstein radius
-impact_parameters = [ 0.8, 0.5, 0.25, 0.1]  # Multiple distances of closest approach
+impact_parameters = [ 0.5, 0.3, 0.2, 0.1, 0.05]  # Multiple distances of closest approach
+
 impact_params = np.array(impact_parameters)*R_E
 
 # Time array or X array
@@ -15,7 +16,7 @@ time_per_param = np.linspace(x_start, x_end, num_frames)
 time = np.concatenate([time_per_param + i * 4 for i in range(len(impact_params))])
 
 # Lens position (fixed at origin)
-lens_pos = np.array([-0.9,0.9])
+lens_pos = np.array([0,0])
 x_lens, y_lens = lens_pos
 
 # Source position as a function of time
@@ -109,6 +110,9 @@ def update(frame):
     impact_text.set_text(f'Impact_Param={impact_parameters[impact_param_idx]} X R_e\nMagnification: {mag:.2f}')
     ax2.set_title(f'Magnification vs Time')
 
+    # if  local_frame % (num_frames) == 160:
+        # plt.savefig(fr'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\stationery_frame.png')        
+
     return lens_dot, source_dot, image_dots, magnification_text, circle, magnification_line, impact_text
 
 global paused
@@ -116,7 +120,7 @@ paused = False
 fig.canvas.mpl_connect('key_press_event', toggle_pause)
 
 # Create animation
-ani = FuncAnimation(fig, update, frames=len(time), blit=True, interval=10, repeat=False)
+ani = FuncAnimation(fig, update, frames=len(time), blit=True, interval=30, repeat=False)
 
 # Set the figure title
 fig.suptitle('Gravitational Microlensing Simulation', fontsize=16)
@@ -129,3 +133,79 @@ plt.show()
 # print("saving")
 # ani.save(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\microlensing_animation_trial.gif', writer='pillow', fps=40)
 # print("output saved")
+
+
+
+
+#--------------------------------------------------------------------------------------#
+
+# printing the Microlensing animation through snapshots
+
+impact_parameters = [ 0.2 ]
+
+frame_nos =[30, 50, 70, 90, 100, 110, 130, 150, 170 ]
+time_stamps =np.array([time_per_param[f] for f in frame_nos])
+impact_param = impact_parameters[0]*R_E
+
+fig, axes = plt.subplots(3, 3, figsize=(7, 8.5))
+axes = axes.flatten()
+fig.subplots_adjust(hspace=0.4, wspace=0.3)
+
+for i, ax in enumerate(axes):
+    ax.set_xlim(x_start-abs(x_lens), x_end+abs(x_lens))
+    ax.set_ylim(x_start-abs(y_lens), x_end+abs(y_lens))
+
+    lens_dot, = ax.plot(0, 0, 'bo', label='Lens', markersize=10)
+
+    source_pos = source_position(time_stamps[i], impact_param)
+    source_dot, = ax.plot([source_pos[0]], [source_pos[1]], 'ro', label='Source', markersize=5)
+
+    images = image_positions(source_pos)
+    image_dots, = ax.plot(images[0], images[1], 'go', label='Images', markersize=5)
+
+    mag = compute_magnification(time_stamps[i], impact_param)
+    magnification_text = ax.text(0.9*x_start-abs(x_lens), 0.9*x_start-abs(y_lens), '', fontsize=8)
+    magnification_text.set_text(f'Magnification: {mag:.2f}')
+
+    circle = plt.Circle(lens_pos, R_E, color='b', fill=False, linestyle='--', label='Einstein Radius')
+    ax.add_patch(circle)
+    ax.set_title(f"Frame number ={frame_nos[i]}", fontsize=10)
+
+    # ax.legend()
+# $R_{{\\text{{Einstein}}}}$ = {R_E}\nImpact_Param= 0.1 X R_e\n
+fig.suptitle(f'Microlensing Event at $R_E$ = {R_E}, Impact_Param = {impact_parameters[0]} X R_e')
+# plt.tight_layout()
+plt.savefig(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\Microlensing_snapshot.png') 
+plt.show()
+
+
+
+
+#======================================================================================================#
+
+# Plotting the various lightcurves for multiple impact params
+
+Impact_parameters = [ 0.8, 0.5, 0.3, 0.2, 0.1, 0.05]
+Impact_param = np.array(Impact_parameters) * R_E
+# print(Impact_parameters)
+
+plt.figure(figsize=(8, 6))
+plt.xlim(x_start, x_end)
+plt.ylim(0, 11)
+
+
+for j, ip in enumerate(Impact_param):
+    # print(impact_param)
+    magnifications = []
+    magnifications = [compute_magnification(t, ip) for t in time_per_param]
+    plt.plot(time_per_param, magnifications, label=f'\u03C1 = {Impact_parameters[j]}')
+    plt.annotate(f'\u03C1 = {Impact_parameters[j]}', xy=(time_per_param[96], magnifications[104]+(0.02/Impact_parameters[j])),  fontsize=10)# xytext=(10, 10), textcoords='offset points',
+
+
+plt.xlabel('Time')
+plt.ylabel('Magnification')
+plt.title('Magnification Light curves for \u03C1 = Impact parameter/R_E')
+# plt.legend()
+
+plt.savefig(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\Microlensing_Light_Curves.png')
+plt.show()

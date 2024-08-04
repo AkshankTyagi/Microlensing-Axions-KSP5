@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 # Parameters
-R_E = 0.8  # Einstein radius
-impact_parameters = [ 0.5, 0.3, 0.2, 0.1, 0.05]  # Multiple distances of closest approach
+R_E = 1  # Einstein radius
+impact_parameters = [0.5]#[ 0.5, 0.3, 0.2, 0.1, 0.05]  # Multiple distances of closest approach
 
 impact_params = np.array(impact_parameters)*R_E
 
@@ -175,7 +175,7 @@ for i, ax in enumerate(axes):
 # $R_{{\\text{{Einstein}}}}$ = {R_E}\nImpact_Param= 0.1 X R_e\n
 fig.suptitle(f'Microlensing Event at $R_E$ = {R_E}, Impact_Param = {impact_parameters[0]} X R_e')
 # plt.tight_layout()
-plt.savefig(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\Microlensing_snapshot.png') 
+# plt.savefig(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\Microlensing_snapshot.png') 
 plt.show()
 
 
@@ -207,5 +207,5 @@ plt.ylabel('Magnification')
 plt.title('Magnification Light curves for \u03C1 = Impact parameter/R_E')
 # plt.legend()
 
-plt.savefig(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\Microlensing_Light_Curves.png')
+# plt.savefig(r'C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\Microlensing_Light_Curves.png')
 plt.show()

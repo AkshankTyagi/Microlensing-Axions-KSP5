@@ -1,0 +1,9 @@
+1) Axion Miniclusters: PRL 119, 021101 (2017) Fairbairn. et. al
+			PHYSICAL REVIEW D 97, 083502 (2018) Fairbairn. et. al
+2) Gravitational lensing: Lectures on Gravitational Lensing Ramesh Narayan 2008, https://arxiv.org/pdf/astro-ph/9606001v2
+3) PBH: https://arxiv.org/pdf/2007.10722, Green Akvanagh 2020
+4) Axion: https://www.science.org/doi/pdf/10.1126/sciadv.abj3618 , chadha-Day et al 2022
+5) ULDM: https://arxiv.org/pdf/2005.03254 , Ferreira (2021)
+
+6) Axion cosmology: https://journals.aps.org/prd/pdf/10.1103/PhysRevD.82.123508 ,  PRD 82, 123508 (2010), Wantz-Shellard(2010)
+			https://link.aps.org/accepted/10.1103/PhysRevD.98.063516 , Nelson-Xiao 2018

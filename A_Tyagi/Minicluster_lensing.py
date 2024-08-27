@@ -117,6 +117,68 @@ fig.canvas.mpl_connect('key_press_event', toggle_pause)
 ani = animation.FuncAnimation(fig, update, frames=len(time), init_func=init, blit=True, interval=10, repeat='False')
 fig.suptitle(f'Microlensing Event ')
 plt.tight_layout()
-# plt.show()
-ani.save(rf"C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\output\lensing2_{M/M_sun}_{b/AU}_{int(v_t/1000)}.gif", writer='pillow', fps=40)
+plt.show()
+# ani.save(rf"C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\\output\lensing2_{M/M_sun}_{b/AU}_{int(v_t/1000)}.gif", writer='pillow', fps=40)
 # plt.savefig(r")
+
+###########################
+
+
+time = np.linspace(-10000, 10000, 500)
+D_S = 778 * kpc  # Distance to source (Andromeda), meters
+D_L = D_S / 2  # Distance to lens, meters
+D_LS = D_S - D_L  
+
+M = 1e-8 * M_sun
+v_t = 200 * 1000  # Tangential velocity, m/s
+b = 1.6 * AU * 1e-3  # Impact parameter, meters
+R_E = einstein_radius(M, D_L, D_S, D_LS)
+x_lens = v_t * time   # Convert time from days to seconds
+y_lens = np.ones_like(x_lens) * b
+u = np.sqrt((x_lens**2 + y_lens**2) / R_E**2)
+magnification_arr2 = magnification(u)
+# print(time, magnification_arr2)
+plt.plot(time, magnification_arr2, label = r'$M_{lens}, V_{lens}, b_{src}$')
+
+M = 1e-8 * M_sun
+v_t = 100 * 1000  # Tangential velocity, m/s
+b = 1.6 * AU * 1e-3  # Impact parameter, meters
+R_E = einstein_radius(M, D_L, D_S, D_LS)
+x_lens = v_t * time   # Convert time from days to seconds
+y_lens = np.ones_like(x_lens) * b
+magnification_arr2 =[]
+u = np.sqrt((x_lens**2 + y_lens**2) / R_E**2)
+magnification_arr2 = magnification(u)
+plt.plot(time, magnification_arr2, label = r'$M_{lens}, V_{lens} / 2, b_{src}$')
+
+M = 1e-8 * M_sun
+v_t = 200 * 1000  # Tangential velocity, m/s
+b = 0.8 * AU * 1e-3  # Impact parameter, meters
+R_E = einstein_radius(M, D_L, D_S, D_LS)
+x_lens = v_t * time   # Convert time from days to seconds
+y_lens = np.ones_like(x_lens) * b
+magnification_arr2 =[]
+u = np.sqrt((x_lens**2 + y_lens**2) / R_E**2)
+magnification_arr2 = magnification(u)
+plt.plot(time, magnification_arr2, label = r'$M_{lens}, V_{lens}, b_{src} / 2$')
+
+M = 1e-7 * M_sun
+v_t = 200 * 1000  # Tangential velocity, m/s
+b = 1.6 * AU * 1e-3  # Impact parameter, meters
+R_E = einstein_radius(M, D_L, D_S, D_LS)
+x_lens = v_t * time   # Convert time from days to seconds
+y_lens = np.ones_like(x_lens) * b
+magnification_arr2 =[]
+u = np.sqrt((x_lens**2 + y_lens**2) / R_E**2)
+magnification_arr2 = magnification(u)
+plt.plot(time, magnification_arr2, label = r'$10 * M_{lens}, V_{lens}, b_{src} $')
+
+plt.xlim(time[0], time[-1])
+plt.ylim(0, 8)
+plt.xlabel('Time (S)')
+plt.ylabel('Magnification')
+plt.title('Microlensing Light Curve')
+plt.legend()
+plt.savefig(rf"C:\Users\Akshank Tyagi\Documents\GitHub\Microlensing-Axions-KSP5\A_Tyagi\output\light_curves2.png")
+plt.show()
+

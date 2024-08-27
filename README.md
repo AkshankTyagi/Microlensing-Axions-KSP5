@@ -2,7 +2,8 @@
 
 # Search for QCD Axion Minicluster using Microlensing
 
-## Mentor: Manish Kumar Tamta (PhD IISc)
+## Mentor: 
+Manish Kumar Tamta (PhD IISc)
 
 ## Mentees:
 1) Akshank Tyagi
